@@ -1,29 +1,28 @@
-'''Código para realizar a automação sem utilizar WebDriver'''
+#!/usr/bin/python
 
-# -*- coding: utf-8 -*-
 from bs4 import BeautifulSoup
 import requests
-import parametros
+import json
 
 with requests.Session() as c:
 
-    #Realiza o login
-    c.get(parametros.url_login)
-    page_login = c.post(parametros.url_login, data=parametros.data_login, headers=parametros.headers_login)
-    print(page_login.text)
-    cookies = c.cookies
+    # Carrega os arquivos json
+    with open( 'login.json' ) as data_file:
+        data_login = json.load(data_file)
 
-    print("\n########### Fim da página de login ############\n")
+    with open( 'urls.json' ) as data_file:
+        data_urls = json.load(data_file)
 
-    #Acessa a página inicial, não sei se é necessário
-    c.get(parametros.url_main, cookies=cookies)
-    page_main = c.post(parametros.url_main_post, data=parametros.data_main, headers=parametros.headers_main)
+    # Realiza o login
+    page_login = c.post(data_urls['login'], data=data_login)
 
-    #Acessa a página de circulação
-    page_circ = c.get(parametros.url_circ, cookies=cookies, headers= parametros.headers_circ)
+    # Acessa a página de Circulações
+    page_circ = c.get(data_urls['circ'])
+
+    # Imprime as Circulações
     soup = BeautifulSoup(page_circ.text, 'lxml')
     frames = soup.find(id="div_conteudo")
     frames = soup.find_all('span')
-    print(soup)
+    #print(soup)
     print("#### Primeiro livro da lista:  ")
     print(frames[46])

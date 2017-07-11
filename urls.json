@@ -1,0 +1,4 @@
+{
+  "login" : "http://biblioteca.ifsc.edu.br/asp/login.asp",
+  "circ" : "http://biblioteca.ifsc.edu.br/index.asp?modo_busca=rapida&content=circulacoes&iFiltroBib=0&iBanner=0&iEscondeMenu=0&iSomenteLegislacao=0&iIdioma=0"
+}
