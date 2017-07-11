@@ -21,8 +21,10 @@ with requests.Session() as c:
 
     # Imprime as Circulações
     soup = BeautifulSoup(page_circ.text, 'lxml')
-    frames = soup.find(id="div_conteudo")
-    frames = soup.find_all('span')
-    #print(soup)
-    print("#### Primeiro livro da lista:  ")
-    print(frames[46])
+    trs = soup.find("table", { "class" : "tab_circulacoes max_width" }).findAll("tr")
+    for tr in trs:
+        tds = tr.findAll("td")
+        for td in tds:
+            print( td.text )
+
+
