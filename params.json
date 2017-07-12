@@ -1,0 +1,16 @@
+{
+    "login": {
+        "codigo": "666",
+        "senha": "666",
+        "sub_login": "sim"
+    },
+    "renovacao_pt1": {
+        "content": "circulacoes",
+        "acao": "renovacao"
+    },
+    "renovacao_pt2":{
+        "iBanner": "0",
+        "iIdioma": "0",
+        "iFiltroBib": "0"
+    }
+}
