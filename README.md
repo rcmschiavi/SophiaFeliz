@@ -1,4 +1,4 @@
-# SophiaFeliz
+﻿# SophiaFeliz
 Script de automação para renovação de livros na biblioteca Hercílio Luz.
 
 ---
@@ -9,6 +9,9 @@ antes seja executado `git update-index --skip-worktree credenciais.json`, para q
 
 ### To-do
 
-- Usar a url limpa e passar pra função os parametros como querystring, fazendo com que parametros de sessão e demais fiquem como constantes no código -> **OK**
-- Tornar os parâmetros de login dinâmicos para extrair do DB do projeto final -> **OK**;
-- Implementar um DB para armazenar as credenciais.
+- Usar a url limpa e passar pra função os parametros como querystring, fazendo com que parametros de sessão e demais fiquem como constantes no código; -> **OK**
+- Tornar os parâmetros de login dinâmicos para extrair do DB do projeto final; -> **OK**
+- Criar um DB para armazenar as credenciais; -> **OK**
+- Criar a parte de escolha dos livros que devem ser renovados;
+- Gravar as credenciais no DB.
+- Criar uma tabela para armazenar informações de renovação, ultima renovação de cada Id por exemplo.
