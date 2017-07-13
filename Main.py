@@ -1,6 +1,9 @@
+#!/usr/bin/python
+
 import Scraping
+
 #Livros para renovar, colocar os true or false no indice do livro a renovar
-livros_renovar=[True,True,False]
+livros_renovar=[True, True, False]
 Scraping.login()
 
 
