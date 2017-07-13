@@ -58,7 +58,7 @@ def renovacao(livros_renov):
 
         #Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
         #que possibilita a concatenação dos livros a serem renovados
-        page_renov = c.get(data_urls['renov'].format(lista), data=data_renov)
+        page_renov = c.get(data_urls['renov'].format(lista))
 
         #Retira os resultados da resposta
         soup_renov = BeautifulSoup(page_renov.content.decode('utf-8'), 'lxml')
