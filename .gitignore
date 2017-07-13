@@ -1,0 +1,5 @@
+# Gerados durante teste/desenvolvimento
+.idea
+.ropeproject
+__pycache__
+
