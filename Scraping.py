@@ -5,21 +5,23 @@ import requests
 import json
 import unicodedata
 
-livros, prazos, id_livros, renov_livros, renov_status,  usuario, data_urls, data_params = [], [], [], [], [], "", json, json
+livros, prazos, id_livros, renov_livros, renov_status,  usuario, data_urls = [], [], [], [], [], "", json
 c = requests.Session()
 
 # Função com os procedimentos de login
-def login():
+def login(matricula, senha):
     global usuario, c, data_params, data_urls
-    # Carrega os arquivos json
-    with open( 'params.json' ) as data_file:
-        data_params = json.load(data_file)
-
+    # Carrega o arquivo json com os urls
     with open( 'urls.json' ) as data_file:
         data_urls = json.load(data_file)
 
+    #Gera o data com login, senha e parâmetro para credenciamento
+    data_credenciais = {"codigo": str(matricula), "senha": str(senha)}
+    param_credenciais = {"sub_login": "sim"}
+    data_credenciais.update(param_credenciais)
+
     # Realiza o login
-    page_login = c.post(data_urls['login'], data=data_params['login'])
+    page_login = c.post(data_urls['login'], data=data_credenciais)
     soup_login = BeautifulSoup(page_login.text, 'lxml')
     try:
         result_login = soup_login.find("table").find("b")
@@ -60,11 +62,9 @@ def renovacao(livros_renov):
     try:
         #Define a variavel como o retorno da função de json
         str_livros_renov = json_renov(livros_renov)
-        print(str_livros_renov)
         params_renov = {"num_circulacao": str_livros_renov}
         params_circ = {"content": "circulacoes", "acao": "renovacao"}
         params_renov.update(params_circ)
-        print(params_renov)
 
         # Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
         #que possibilita a concatenação dos livros a serem renovados
