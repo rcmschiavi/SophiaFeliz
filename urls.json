@@ -1,5 +1,5 @@
 {
   "login" : "http://biblioteca.ifsc.edu.br/asp/login.asp",
-  "circ" : "http://biblioteca.ifsc.edu.br/index.asp?modo_busca=rapida&content=circulacoes&iFiltroBib=0&iBanner=0&iEscondeMenu=0&iSomenteLegislacao=0&iIdioma=0",
-  "renov": "http://biblioteca.ifsc.edu.br/index.asp?content=circulacoes&acao=renovacao&num_circulacao={0}&iBanner=0&iIdioma=0&iFiltroBib=0"
+  "circ" : "http://biblioteca.ifsc.edu.br/index.asp?modo_busca=rapida&content=circulacoes",
+  "renov": "http://biblioteca.ifsc.edu.br/index.asp?content=circulacoes&acao=renovacao&num_circulacao={0}"
 }
