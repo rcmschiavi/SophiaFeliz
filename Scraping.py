@@ -47,6 +47,11 @@ def circ_op():
                 for inp in inps:
                     id_livros.append(inp.get('value'))
 
+        id_livros.append('0')
+        id_livros.append('1')
+        id_livros.append('2')
+        id_livros.append('3')
+
     except:
         print("Erro na circulação")
 
@@ -54,12 +59,12 @@ def circ_op():
 def renovacao(livros_renov):
     try:
         #Define a variavel como o retorno da função de json
-        data_renov, lista = json_renov(livros_renov)
-        print(data_renov)
+        lista = json_renov(livros_renov)
 
         # Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
         #que possibilita a concatenação dos livros a serem renovados
         page_renov = c.get(data_urls['renov'].format(lista))
+        print(page_renov.url)
 
         # Retira os resultados da resposta
         soup_renov = BeautifulSoup(page_renov.content.decode('utf-8'), 'lxml')
@@ -73,24 +78,13 @@ def renovacao(livros_renov):
 
 # Função que gera o json final para renovação
 def json_renov(livros_renov):
-    json_id_renov = {}
     lista = []
+
     # Formata os indices de livros que serão renovados em indices para o get
     for i, itens in enumerate(livros_renov):
         if (itens):
             lista.append(id_livros[i])
 
-    # Remove os caracteres indesejáveis para o concatenar o json
-    json_id_renov['num_circulacao'] = lista
-    json_id_renov = json.dumps(json_id_renov)
-    json_id_renov = json_id_renov.replace("{", "")
-    json_id_renov = json_id_renov.replace("}", "")
-    json_final_pt1 = json.dumps(data_params['renovacao_pt1']).replace("}", "")
-    json_final_pt2 = json.dumps(data_params['renovacao_pt2']).replace("{", "")
-    data_renov = "{0}, {1}, {2}".format(json_final_pt1, json_id_renov, json_final_pt2)
-    lista = str(lista)
-    lista = lista.replace("[","")
-    lista = lista.replace("]","")
-    lista = lista.replace("'","")
-    lista = lista.replace(" ","")
-    return data_renov, lista
+    lista = ','.join(m for m in lista)
+
+    return lista
