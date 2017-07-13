@@ -5,7 +5,7 @@ import requests
 import json
 import unicodedata
 
-livros, prazos, usuario, id_livros, data_urls, data_params = [], [], "", [], json, json
+livros, prazos, id_livros, renov_livros, renov_status,  usuario, data_urls, data_params = [], [], [], [], [], "", json, json
 c = requests.Session()
 
 # Função com os procedimentos de login
@@ -56,12 +56,15 @@ def circ_op():
 
 # Função que realiza as operações de renovação
 def renovacao(livros_renov):
+    global renov_livros, renov_status
     try:
         #Define a variavel como o retorno da função de json
         str_livros_renov = json_renov(livros_renov)
+        print(str_livros_renov)
         params_renov = {"num_circulacao": str_livros_renov}
-        params_circ = {"content": "circulacoes"}
+        params_circ = {"content": "circulacoes", "acao": "renovacao"}
         params_renov.update(params_circ)
+        print(params_renov)
 
         # Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
         #que possibilita a concatenação dos livros a serem renovados
@@ -71,10 +74,12 @@ def renovacao(livros_renov):
 
         # Retira os resultados da resposta
         soup_renov = BeautifulSoup(page_renov.content.decode('utf-8'), 'lxml')
+        #(soup_renov)
         trs = soup_renov.findAll("td", {"class": "td_tabelas_valor2 esquerda"})
         num_livros =int(len(trs)/2 - 1)
         for i in range(0,num_livros,1):
-            print(trs[3+i*2].text)
+            renov_livros.append(trs[2 + i * 2].text)
+            renov_status.append(trs[3 + i * 2].text)
 
     except Exception as e:
         print("Erro na renovação: ", e)
