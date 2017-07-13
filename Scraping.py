@@ -68,18 +68,17 @@ def renovacao(livros_renov):
         for i in range(0,num_livros,1):
             print(trs[3+i*2].text)
 
-    except: print("Erro na renovação")
+    #except: print("Erro na renovação")
+    except Exception as e: print("Erro na renovação: ", e)
 
 # Função que gera o json final para renovação
 def json_renov(livros_renov):
     json_id_renov = {}
     lista = []
-    i = 1
     # Formata os indices de livros que serão renovados em indices para o get
-    for itens in livros_renov:
+    for i, itens in enumerate(livros_renov):
         if (itens):
             lista.append(id_livros[i])
-        i += 1
 
     # Remove os caracteres indesejáveis para o concatenar o json
     json_id_renov['num_circulacao'] = lista
