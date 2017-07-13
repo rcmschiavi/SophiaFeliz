@@ -25,14 +25,17 @@ def login():
         result_login = soup_login.find("table").find("b")
         usuario = result_login.text
         circ_op()
-    except: print("Erro no login")
+    except Exception as e:
+        print("Erro no login: ", e)
+        exit(-1)
 
 # Função com os procedimentos de acesso às circulações
 def circ_op():
     global data_urls, livros, prazos, id_livros
 
     # Acessa a página de Circulações
-    page_circ = c.get(data_urls['circ'])
+    params_circ = {"content": "circulacoes"}
+    page_circ = c.get(data_urls['index'], params=params_circ)
 
     # Captura as Circulações
     soup = BeautifulSoup(page_circ.content.decode('utf-8'), 'lxml')
@@ -47,24 +50,24 @@ def circ_op():
                 for inp in inps:
                     id_livros.append(inp.get('value'))
 
-        id_livros.append('0')
-        id_livros.append('1')
-        id_livros.append('2')
-        id_livros.append('3')
-
-    except:
-        print("Erro na circulação")
+    except Exception as e:
+        print("Erro na circulação: ", e)
+        exit(-1)
 
 # Função que realiza as operações de renovação
 def renovacao(livros_renov):
     try:
         #Define a variavel como o retorno da função de json
-        lista = json_renov(livros_renov)
+        str_livros_renov = json_renov(livros_renov)
+        params_renov = {"num_circulacao": str_livros_renov}
+        params_circ = {"content": "circulacoes"}
+        params_renov.update(params_circ)
 
         # Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
         #que possibilita a concatenação dos livros a serem renovados
-        page_renov = c.get(data_urls['renov'].format(lista))
-        print(page_renov.url)
+        page_renov = c.get(data_urls['index'], params=params_renov);
+
+        #print(page_renov.url)
 
         # Retira os resultados da resposta
         soup_renov = BeautifulSoup(page_renov.content.decode('utf-8'), 'lxml')
@@ -73,10 +76,11 @@ def renovacao(livros_renov):
         for i in range(0,num_livros,1):
             print(trs[3+i*2].text)
 
-    #except: print("Erro na renovação")
-    except Exception as e: print("Erro na renovação: ", e)
+    except Exception as e:
+        print("Erro na renovação: ", e)
+        exit(-1)
 
-# Função que gera o json final para renovação
+# Função que gera o json final para renovação, atualmente gera uma string
 def json_renov(livros_renov):
     lista = []
 
@@ -85,6 +89,6 @@ def json_renov(livros_renov):
         if (itens):
             lista.append(id_livros[i])
 
-    lista = ','.join(m for m in lista)
+    str_livros_renov = ','.join(m for m in lista)
 
-    return lista
+    return str_livros_renov

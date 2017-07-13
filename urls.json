@@ -1,5 +1,4 @@
 {
   "login" : "http://biblioteca.ifsc.edu.br/asp/login.asp",
-  "circ" : "http://biblioteca.ifsc.edu.br/index.asp?modo_busca=rapida&content=circulacoes",
-  "renov": "http://biblioteca.ifsc.edu.br/index.asp?content=circulacoes&acao=renovacao&num_circulacao={0}"
+  "index": "http://biblioteca.ifsc.edu.br/index.asp"
 }
