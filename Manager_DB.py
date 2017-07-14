@@ -27,7 +27,7 @@ def select(id_face):
     """% (id_face))
     return cursor.fetchall()
 
-def insert(id_face, matricula, senha):
+def insert_cred(id_face, matricula, senha):
     """ Função para inserir as credenciais no DB """
 
     global cursor
@@ -35,4 +35,10 @@ def insert(id_face, matricula, senha):
     INSERT INTO usuarios (id_face, matricula, senha)
     VALUES (?,?,?)
     """, (id_face, matricula, senha))
+
+    cursor.execute("""
+    INSERT INTO renovacoes (id)
+    VALUES  ((SELECT id  FROM usuarios WHERE id_face LIKE '%s'))
+    """% (id_face))
     conn.commit()
+

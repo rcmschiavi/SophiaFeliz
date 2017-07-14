@@ -24,7 +24,7 @@ def get_credenciais():
         matricula = r.findall(matricula)
 
     # Pede senha após a matrícula estar correta.
-    senha = getpass.getpass('Digite a senha:')
+    senha = input('Digite a senha:')
 
     # Define como matricula somente o primeiro match da lista gerada no regex
     matricula = matricula[0]

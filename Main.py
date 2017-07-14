@@ -25,7 +25,8 @@ def input_login():
     if (dados_db == []):
         print("Ainda não tenho sua matricula e senha.")
         matricula, senha = ChatBot.get_credenciais()
-        Manager_DB.insert(id_face,matricula,senha)
+        Manager_DB.insert_cred(id_face,matricula,senha)
+        dados_db = Manager_DB.select(id_face)
     else:
         matricula, senha = dados_db[0][2], dados_db[0][3]
         print("Já tenho suas credenciais.")
