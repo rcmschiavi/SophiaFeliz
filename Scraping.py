@@ -18,7 +18,7 @@ def login(matricula, senha):
     with open( 'urls.json' ) as data_file:
         data_urls = json.load(data_file)
 
-    #Gera o data com login, senha e parâmetro para credenciamento
+    # Gera o data com login, senha e parâmetro para credenciamento
     data_credenciais = {"codigo": str(matricula), "senha": str(senha)}
     param_credenciais = {"sub_login": "sim"}
     data_credenciais.update(param_credenciais)
@@ -65,7 +65,7 @@ def circ_op():
 def renovacao(livros_renov):
     """ Função que realiza as operações de renovação. """
 
-    global renov_livros, renov_status
+    global renov_livros, renov_status1
 
     try:
         #Define a variavel como o retorno da função de json

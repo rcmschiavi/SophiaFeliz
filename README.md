@@ -23,8 +23,9 @@ Então instale as bibliotecas necessárias:
 - Tornar os parâmetros de login dinâmicos para extrair do DB do projeto final; -> **OK**
 - Criar um DB para armazenar as credenciais; -> **OK**
 - Criar a parte de escolha dos livros que devem ser renovados; -> **OK**
-- Gravar as credenciais no DB depois de verificar a matrícula;
-- Criar uma tabela para armazenar informações de renovação, ultima renovação de cada Id por exemplo.
+- Gravar as credenciais no DB depois de verificar a matrícula; -> **OK**
+- Criar uma tabela para armazenar informações de renovação;
+- Iniciar a implementação do Chatbot.
 
 ### Como contribuir:
 

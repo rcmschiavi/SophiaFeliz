@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import Scraping
+import Manager_DB
+import ChatBot
 import re
-import getpass
 
 
 def input_login():
@@ -11,29 +12,39 @@ def input_login():
 
     livros_renovar = []
 
-    # Captura as informações de login que serão recebidas do chat
-    matricula = input('Digite a matrícula (somente os numeros):\n')
+    # Captura o id do usuario do facebook
+    id_face = ChatBot.get_face()
 
-    # Usando expressões regulares para ter certeza que o usuário inseriu
-    #a matricula no formato correto
-    r = re.compile('\d{10}')
-    matricula = r.findall(matricula)
-    # Repete a aquisição da matricula até que o usuario insira no formato correto
-    while (len(matricula) < 1):
-        matricula = input('A matrícula não está no formato correto (xxxxxxxxxx) :/\n'
-                          'Digite ela novamente, por favor:\n')
-        matricula = r.findall(matricula)
+    # Abre o DB para realizar as operações
+    Manager_DB.abrir_db()
 
-    # Pede senha após a matrícula estar correta.
-    senha = getpass.getpass('Digite a senha:')
+    # Define a variável com uma lista dos matchs de id_face com os registros do DB
+    dados_db = Manager_DB.select(id_face)
+
+    # Verifica se o id_facebook já está registrado, else faz o registro
+    if (dados_db == []):
+        print("Ainda não tenho sua matricula e senha.")
+        matricula, senha = ChatBot.get_credenciais()
+        Manager_DB.insert(id_face,matricula,senha)
+    else:
+        matricula, senha = dados_db[0][2], dados_db[0][3]
+        print("Já tenho suas credenciais.")
+    print("Matrícula: {0} Senha1: {1}".format(matricula,senha))
+
+    # Fecha o DB
+    Manager_DB.conn.close()
+
+    # Exit para realizar os testes sem fazer nenhum scraping
+    exit(0)
+
     print('Tentando login...')
-
-    # Pegando somente o primeiro match da lista gerada no regex
-    matricula = matricula[0]
 
     # Chama a função de login do scraping para poder obter os dados do
     #usuario e os livros que podem ser renovados
     Scraping.login(matricula, senha)
+
+
+    Manager_DB.select()
 
     # Usa regex para pegar somente o primeiro nome do usuário
     r = re.compile('\w+')
