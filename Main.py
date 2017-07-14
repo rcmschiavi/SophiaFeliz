@@ -11,14 +11,14 @@ def input_login():
 
     livros_renovar = []
 
-    #Captura as informações de login que serão recebidas do chat
+    # Captura as informações de login que serão recebidas do chat
     matricula = input('Digite a matrícula (somente os numeros):\n')
 
-    #Usando expressões regulares para ter certeza que o usuário inseriu
-    # a matricula no formato correto
+    # Usando expressões regulares para ter certeza que o usuário inseriu
+    #a matricula no formato correto
     r = re.compile('\d{10}')
     matricula = r.findall(matricula)
-    #Repete a aquisição da matricula até que o usuario insira no formato correto
+    # Repete a aquisição da matricula até que o usuario insira no formato correto
     while (len(matricula) < 1):
         matricula = input('A matrícula não está no formato correto (xxxxxxxxxx) :/\n'
                           'Digite ela novamente, por favor:\n')
