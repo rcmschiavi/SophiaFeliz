@@ -1,14 +1,15 @@
 #!/usr/bin/python
 import Scraping
 import re
+import getpass
 
 #Função para simular o recebimento de dados do chatBot
 def input_login():
     livros_renovar = []
-    
+
     #Captura as informações de login que serão recebidas do chat
     matricula = input('Digite a matrícula (somente os numeros):\n')
-    senha = input('Digite a senha:\n')
+    senha = getpass.getpass('Digite a senha:')
 
     #Usando expressões regulares para ter certeza que o usuário inseriu
     # a matricula no formato correto
@@ -19,6 +20,8 @@ def input_login():
         matricula = input('A matrícula não está no formato correto (xxxxxxxxxx) :/\n'
                           'Digite ela novamente, por favor:\n')
         matricula = r.findall(matricula)
+
+    print('Tentando login...')
 
     #Pegando somente o primeiro match da lista gerada no regex
     matricula = matricula[0]
@@ -43,10 +46,7 @@ def input_login():
     for i in Scraping.livros:
         #Verifica se existe algum valor no input com um find e um index no 'scraping.livros' procurando o valor atual de 'i'
         #Talvez exista alguma sintaxe mais adequada pra substituir esse 'index'
-        if(input_livros_renov.find(str(Scraping.livros.index(i)+1))!=-1):
-            livros_renovar.append(True)
-        else:
-            livros_renovar.append(False)
+        livros_renovar.append(input_livros_renov.find(str(Scraping.livros.index(i)+1))!=-1)
 
     #Chama a função de renovação do scraping
     Scraping.renovacao(livros_renovar)
