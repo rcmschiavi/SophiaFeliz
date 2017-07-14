@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from bs4 import BeautifulSoup
 import requests
@@ -8,9 +8,12 @@ import unicodedata
 livros, prazos, id_livros, renov_livros, renov_status,  usuario, data_urls = [], [], [], [], [], "", json
 c = requests.Session()
 
-# Função com os procedimentos de login
+
 def login(matricula, senha):
+    """ Função com os procedimentos de login """
+
     global usuario, c, data_params, data_urls
+
     # Carrega o arquivo json com os urls
     with open( 'urls.json' ) as data_file:
         data_urls = json.load(data_file)
@@ -31,8 +34,10 @@ def login(matricula, senha):
         print("Erro no login: ", e)
         exit(-1)
 
-# Função com os procedimentos de acesso às circulações
+
 def circ_op():
+    """ Função com os procedimentos de acesso/captura ds circulações. """
+
     global data_urls, livros, prazos, id_livros
 
     # Acessa a página de Circulações
@@ -56,9 +61,12 @@ def circ_op():
         print("Erro na circulação: ", e)
         exit(-1)
 
-# Função que realiza as operações de renovação
+
 def renovacao(livros_renov):
+    """ Função que realiza as operações de renovação. """
+
     global renov_livros, renov_status
+
     try:
         #Define a variavel como o retorno da função de json
         str_livros_renov = json_renov(livros_renov)
@@ -81,8 +89,11 @@ def renovacao(livros_renov):
         print("Erro na renovação: ", e)
         exit(-1)
 
-# Função que gera o json final para renovação, atualmente gera uma string
+
 def json_renov(livros_renov):
+    """ Retorna os ids dos livros a serem renovados, como string,
+    separados por vírgulas. """
+
     lista = []
 
     # Formata os indices de livros que serão renovados em indices para o get

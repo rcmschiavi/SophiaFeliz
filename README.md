@@ -2,12 +2,22 @@
 Script de automação para renovação de livros na biblioteca Hercílio Luz.
 
 ---
-### Configurações
+### Instalação:
+Para funcionar, requer Python 3 ou superior instalado.
 
-Para modificar as **credenciais** dentro do credenciais.json, é recomendado que
-antes seja executado `git update-index --skip-worktree credenciais.json`, para que os credenciais não corram risco de entrar para o git.
+Primeiramente clone o repositório e entre na pasta criada:
+`git clone https://github.com/rcmschiavi/SophiaFeliz`
+`cd SophiaFeliz`
 
-### To-do
+Então instale as bibliotecas necessárias:
+`pip install -r requirements.txt`
+
+### Utilização
+`./Main.py`             
+
+---
+
+### To-do:
 
 - Usar a url limpa e passar pra função os parametros como querystring, fazendo com que parametros de sessão e demais fiquem como constantes no código; -> **OK**
 - Tornar os parâmetros de login dinâmicos para extrair do DB do projeto final; -> **OK**
@@ -15,3 +25,12 @@ antes seja executado `git update-index --skip-worktree credenciais.json`, para q
 - Criar a parte de escolha dos livros que devem ser renovados; -> **OK**
 - Gravar as credenciais no DB depois de verificar a matrícula;
 - Criar uma tabela para armazenar informações de renovação, ultima renovação de cada Id por exemplo.
+
+### Como contribuir:
+
+1. Crie um Fork.
+2. Para trabalhar em uma proposta, crie um branch (`git checkout -b proposta_x`)
+3. Commit (`git commit -ams "Descrição da proposta"`)
+4. Push para o branch da proposta (`git push origin proposta_x`)
+5. Abra uma [Pull Request]
+6. Vá fazer outra coisa.
