@@ -66,15 +66,11 @@ def renovacao(livros_renov):
         params_circ = {"content": "circulacoes", "acao": "renovacao"}
         params_renov.update(params_circ)
 
-        # Faz o get enviando o parametro dos livros selecionados no url, no json do urls de renovação tem um {0}
-        #que possibilita a concatenação dos livros a serem renovados
+        # Faz o get enviando o parametro dos livros selecionados
         page_renov = c.get(data_urls['index'], params=params_renov)
-
-        #print(page_renov.url)
 
         # Retira os resultados da resposta
         soup_renov = BeautifulSoup(page_renov.content.decode('utf-8'), 'lxml')
-        #(soup_renov)
         trs = soup_renov.findAll("td", {"class": "td_tabelas_valor2 esquerda"})
         num_livros =int(len(trs)/2 - 1)
         for i in range(0,num_livros,1):

@@ -1,19 +1,17 @@
 #!/usr/bin/python
 import Scraping
-import json
 import re
-
-
 
 #Função para simular o recebimento de dados do chatBot
 def input_login():
-
+    livros_renovar = []
+    
     #Captura as informações de login que serão recebidas do chat
     matricula = input('Digite a matrícula (somente os numeros):\n')
     senha = input('Digite a senha:\n')
 
-    #Usando expressões regulares para ter certeza que o usuario inseriu
-    #a matricula no formato correto
+    #Usando expressões regulares para ter certeza que o usuário inseriu
+    # a matricula no formato correto
     r = re.compile('\d{10}')
     matricula = r.findall(matricula)
     #Repete a aquisição da matricula até que o usuario insira no formato correto
@@ -33,44 +31,30 @@ def input_login():
     r = re.compile('\w+')
     print("Olá, {0}".format(r.findall(Scraping.usuario)[0].capitalize()))
 
-    #Livros para renovar, colocar os true or false no indice do livro a renovar
-    livros_renovar=[True, True, False]
+    #Exibe os livros com as datas de vencimento
+    print("Você tem os seguintes livros com as respectivas datas de vencimento:")
+    for i in Scraping.livros:
+        print("id: {0}  livro: {1}  vencimento: {2}".format(Scraping.livros.index(i)+1,i,Scraping.prazos[Scraping.livros.index(i)]))
 
-    scraping(livros_renovar)
+    #Recebe a string dos livros que devem ser renovados, sem necessidade de formatação
+    input_livros_renov = input('Digite o id dos livros que você deseja renovar: ')
 
-#função separada só para poder chamar ou não
-def scraping(livros_renovar):
+    #Converte o valor recebido no input para uma lista de boolean mais para a renovação
+    for i in Scraping.livros:
+        #Verifica se existe algum valor no input com um find e um index no 'scraping.livros' procurando o valor atual de 'i'
+        #Talvez exista alguma sintaxe mais adequada pra substituir esse 'index'
+        if(input_livros_renov.find(str(Scraping.livros.index(i)+1))!=-1):
+            livros_renovar.append(True)
+        else:
+            livros_renovar.append(False)
 
+    #Chama a função de renovação do scraping
     Scraping.renovacao(livros_renovar)
 
-    if len(Scraping.livros)>0:
-        print(Scraping.id_livros)
-        print(Scraping.renov_livros)
-        print(Scraping.renov_status)
-
-#Função para não precisar dar inputs quando quiser testar funções
-def login_automatico():
-    # Carrega os json para credenciamento para
-    # evitar que façamos o commit das nossas credenciais
-    with open('credenciais.json') as data_file:
-        data_params = json.load(data_file)
-
-    # Livros para renovar, colocar os true or false no indice do livro a renovar
-    livros_renovar = [True, True, False]
-    Scraping.login(data_params['login']['codigo'], data_params['login']['senha'])
-    Scraping.renovacao(livros_renovar)
-
-    if len(Scraping.livros) > 0:
-        print(Scraping.usuario)
-        print(Scraping.livros)
-        print(Scraping.id_livros)
-        print(Scraping.renov_livros)
-        print(Scraping.renov_status)
+    #Informa a resposta da renovação para o usuário
+    for i in Scraping.renov_livros:
+        #Mesma indexação utilizada na verificação do input de renovação
+        print("livro: {0} resultado: {1}".format(i,Scraping.renov_status[Scraping.renov_livros.index(i)]))
 
 #Chama a função para realizar os inputs pelo usuario
 input_login()
-
-'''
-#Opção de automatizar os inputs em testes
-login_automatico()
-'''
