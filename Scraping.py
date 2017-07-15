@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+# Realiza todos os procedimentos de scraping
+# Como login, verificar livros alugados e renovar os livros
+
 from bs4 import BeautifulSoup
 import requests
 import json

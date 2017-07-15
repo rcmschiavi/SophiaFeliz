@@ -6,9 +6,8 @@ import Manager_DB
 import ChatBot
 import re
 
-
-def input_login():
-    """ Função para simular o recebimento de dados do chatBot """
+def chat():
+    """ Função para realizar as operações quando receber requesições do chatBot """
 
     livros_renovar = []
 
@@ -32,11 +31,8 @@ def input_login():
         print("Já tenho suas credenciais.")
     print("Matrícula: {0} Senha1: {1}".format(matricula,senha))
 
-    # Fecha o DB
-    Manager_DB.conn.close()
-
     # Exit para realizar os testes sem fazer nenhum scraping
-    exit(0)
+    #exit(0)
 
     print('Tentando login...')
 
@@ -44,35 +40,50 @@ def input_login():
     #usuario e os livros que podem ser renovados
     Scraping.login(matricula, senha)
 
-
-    Manager_DB.select()
+    # Realiza o select no DB para verificar se já temos
+    # as credenciais do usuario pelo id_face
+    Manager_DB.select(id_face)
 
     # Usa regex para pegar somente o primeiro nome do usuário
     r = re.compile('\w+')
     print("Olá, {0}".format(r.findall(Scraping.usuario)[0].capitalize()))
 
-    # Exibe os livros com as datas de vencimento
-    print("Você tem os seguintes livros com as respectivas datas de vencimento:")
-    for i in Scraping.livros:
-        print("id: {0}  livro: {1}  vencimento: {2}".format(Scraping.livros.index(i)+1,i,Scraping.prazos[Scraping.livros.index(i)]))
+    # Prossegue as operações caso haja algum livro na biblioteca
+    if(len(Scraping.livros)>0):
 
-    # Recebe a string dos livros que devem ser renovados, sem necessidade de formatação
-    input_livros_renov = input('Digite o id dos livros que você deseja renovar: ')
+        # Exibe os livros com as datas de vencimento
+        print("Você tem os seguintes livros com as respectivas datas de vencimento:")
+        for i in Scraping.livros:
+            print("id: {0}  livro: {1}  vencimento: {2}".format(Scraping.livros.index(i)+1,i,Scraping.prazos[Scraping.livros.index(i)]))
 
-    # Converte o valor recebido no input para uma lista de boolean mais para a renovação
-    for i in Scraping.livros:
-        # Verifica se existe algum valor no input com um find e um index no 'scraping.livros' procurando o valor atual de 'i'
-        # Talvez exista alguma sintaxe mais adequada pra substituir esse 'index'
-        livros_renovar.append(input_livros_renov.find(str(Scraping.livros.index(i)+1))!=-1)
+        # verifica qual das datas de vencimento
+        venc_prox = Scraping.prazos[0]
+        for i in Scraping.prazos:
+            if(i<venc_prox):
+                venc_prox=i
+        Manager_DB.update_vencimento(dados_db[0][0],venc_prox)
 
-    # Chama a função de renovação do scraping
-    Scraping.renovacao(livros_renovar)
+        # Recebe a string dos livros que devem ser renovados, sem necessidade de formatação
+        input_livros_renov = input('Digite o id dos livros que você deseja renovar: ')
 
-    # Informa a resposta da renovação para o usuário
-    for i in Scraping.renov_livros:
-        #Mesma indexação utilizada na verificação do input de renovação
-        print("livro: {0} resultado: {1}".format(i,Scraping.renov_status[Scraping.renov_livros.index(i)]))
+        # Converte o valor recebido no input para uma lista de boolean mais para a renovação
+        for i in Scraping.livros:
+            # Verifica se existe algum valor no input com um find e um index no 'scraping.livros' procurando o valor atual de 'i'
+            # Talvez exista alguma sintaxe mais adequada pra substituir esse 'index'
+            livros_renovar.append(input_livros_renov.find(str(Scraping.livros.index(i)+1))!=-1)
 
+        # Chama a função de renovação do scraping
+        Scraping.renovacao(livros_renovar)
 
-# Chama a função para realizar os inputs pelo usuario
-input_login()
+        # Informa a resposta da renovação para o usuário
+        for i in Scraping.renov_livros:
+            # Mesma indexação utilizada na verificação do input de renovação
+            print("livro: {0} resultado: {1}".format(i,Scraping.renov_status[Scraping.renov_livros.index(i)]))
+
+    else: print("Você não possui livros para renovar")
+
+    # Fecha o DB
+    Manager_DB.conn.close()
+
+# Chama a função para realizar as operações pelo chat
+chat()

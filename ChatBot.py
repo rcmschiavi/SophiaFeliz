@@ -1,10 +1,15 @@
+
+# Realiza os procedimentos do chatbot
+# Como envio de mensagens, captura das credenciais e pedidos de renovação
+
 import getpass
 import re
 
 def get_face():
     ''' Função para simular o id_face recebido no post do ChatBot '''
 
-    id_face = input('Digite o id')
+    # Simula a variável recebida no post do face
+    id_face = input('Digite o id do face (Qualquer número que não esteja no DB): ')
     return id_face
 
 def get_credenciais():
@@ -24,7 +29,7 @@ def get_credenciais():
         matricula = r.findall(matricula)
 
     # Pede senha após a matrícula estar correta.
-    senha = input('Digite a senha:')
+    senha = getpass.getpass('Digite a senha:')
 
     # Define como matricula somente o primeiro match da lista gerada no regex
     matricula = matricula[0]
