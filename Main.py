@@ -5,6 +5,33 @@ import Scraping
 import Manager_DB
 import ChatBot
 import re
+import datetime
+from datetime import datetime, date, time, timedelta
+
+
+def automatico():
+    data_limite = date.today()  + timedelta(days=6)
+    #date_limite =
+    print(data_limite)
+    Manager_DB.connect_db()
+    rows_renov = Manager_DB.select_livros()
+
+    print(rows_renov)
+
+    for row in rows_renov:
+        if((row[1]!=None)and(int(row[2])==1)):
+            data_venc = datetime.strptime(row[1], '%d/%m/%y')
+            if(data_venc.date()<data_limite):
+               print(row[1])
+               print("Você tem um livro para renovar.")
+               # Testando a desativação das notificações
+               if (input('Você deseja desligar as notificações? (y/n) ') == 'y'):
+                   Manager_DB.ignorar_avisos(row[0])
+                   print("As notificações foram desativadas")
+            else: print("Não há livros que vencerão em breve.")
+        else: print("Não há livros ativos para renovar.")
+
+    Manager_DB.select_livros()
 
 def chat():
     """ Função para realizar as operações quando receber requesições do chatBot """
@@ -15,17 +42,17 @@ def chat():
     id_face = ChatBot.get_face()
 
     # Abre o DB para realizar as operações
-    Manager_DB.abrir_db()
+    Manager_DB.connect_db()
 
     # Define a variável com uma lista dos matchs de id_face com os registros do DB
-    dados_db = Manager_DB.select(id_face)
+    dados_db = Manager_DB.select_info_user(id_face)
 
     # Verifica se o id_facebook já está registrado, else faz o registro
     if (dados_db == []):
         print("Ainda não tenho sua matricula e senha.")
         matricula, senha = ChatBot.get_credenciais()
         Manager_DB.insert_cred(id_face,matricula,senha)
-        dados_db = Manager_DB.select(id_face)
+        dados_db = Manager_DB.select_info_user(id_face)
     else:
         matricula, senha = dados_db[0][2], dados_db[0][3]
         print("Já tenho suas credenciais.")
@@ -86,4 +113,6 @@ def chat():
     Manager_DB.conn.close()
 
 # Chama a função para realizar as operações pelo chat
-chat()
+#chat()
+
+automatico()

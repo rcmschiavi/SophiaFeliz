@@ -9,7 +9,7 @@ import sqlite3
 
 cursor, conn = sqlite3.Cursor, sqlite3.Connection
 
-def abrir_db():
+def connect_db():
     """ Função que abre o DB """
 
     global cursor, conn
@@ -20,7 +20,7 @@ def abrir_db():
         print("Erro ao abrir o banco de dados: ", e)
         exit(-1)
 
-def select(id_face):
+def select_info_user(id_face):
     """ Função para verificar se o id_face já está presente no DB """
 
     global cursor,conn
@@ -41,7 +41,7 @@ def insert_cred(id_face, matricula, senha):
 
     cursor.execute("""
     INSERT INTO renovacoes (id)
-    VALUES  ((SELECT id  FROM usuarios WHERE id_face LIKE '%d'))
+    VALUES  ((SELECT id  FROM usuarios WHERE id_face LIKE '%d'), 0)
     """% (int(id_face)))
     conn.commit()
 
@@ -51,7 +51,7 @@ def update_vencimento(id,vencimento):
     global cursor
     cursor.execute("""
        UPDATE renovacoes
-    SET vencimento = '%s'
+    SET vencimento = '%s', ignorar = 1
     WHERE id = '%d';
     """% (vencimento,int(id)))
     print(int(id),vencimento)
@@ -68,11 +68,29 @@ def verificar_datas(id):
 
 def update_senha(id_face, nova_senha):
     " Função que realiza a troca de senha no DB"
-    
+
     global cursor
     cursor.execute("""
        UPDATE usuario
     SET senha = '%s'
     WHERE id_face = '%d';
     """% (nova_senha,int(id_face)))
+    conn.commit()
+
+def select_livros():
+
+    global cursor,conn
+    cursor.execute("""
+    SELECT * FROM renovacoes
+    """)
+    return cursor.fetchall()
+
+def ignorar_avisos(id):
+
+    global cursor
+    cursor.execute("""
+       UPDATE renovacoes
+    SET ignorar = 0
+    WHERE id = %d;
+    """% (id))
     conn.commit()
