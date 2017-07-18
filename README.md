@@ -1,19 +1,29 @@
 ﻿# SophiaFeliz
 Script de automação para renovação de livros na biblioteca Hercílio Luz.
 
+# SophiaFeliz
+Script (independente) para renovação automatizada de livros/circulações para bibliotecas que usam o sistema [SophiA](http://www.portalsophia.com.br).
+
+**EM DESENVOLVIMENTO. NÃO FUNCIONAL**
+
 ---
+
+## Servidor (Python)
+
 ### Instalação:
 Para funcionar, requer Python 3 ou superior instalado.
 
 Primeiramente clone o repositório e entre na pasta criada:
-`git clone https://github.com/rcmschiavi/SophiaFeliz`
-`cd SophiaFeliz`
+`git clone https://github.com/rcmschiavi/SophiaFeliz && cd SophiaFeliz`
 
 Então instale as bibliotecas necessárias:
 `pip install -r requirements.txt`
 
 ### Utilização
 `./Main.py`             
+
+## Chatbot
+...
 
 ---
 
@@ -34,7 +44,7 @@ Então instale as bibliotecas necessárias:
 
 1. Crie um Fork.
 2. Para trabalhar em uma proposta, crie um branch (`git checkout -b proposta_x`)
-3. Commit (`git commit -ams "Descrição da proposta"`)
+3. Commit (`git commit -m "Descrição da proposta"`)
 4. Push para o branch da proposta (`git push origin proposta_x`)
 5. Abra uma [Pull Request]
 6. Vá fazer outra coisa.
