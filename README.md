@@ -1,7 +1,4 @@
 ﻿# SophiaFeliz
-Script de automação para renovação de livros na biblioteca Hercílio Luz.
-
-# SophiaFeliz
 Script (independente) para renovação automatizada de livros/circulações para bibliotecas que usam o sistema [SophiA](http://www.portalsophia.com.br).
 
 **EM DESENVOLVIMENTO. NÃO FUNCIONAL**
