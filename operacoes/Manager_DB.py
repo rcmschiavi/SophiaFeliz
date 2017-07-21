@@ -6,6 +6,7 @@
 # Que avisará o usuário que o livro está perto de vencer
 
 import sqlite3
+import os
 
 cursor, conn = sqlite3.Cursor, sqlite3.Connection
 
@@ -14,13 +15,13 @@ def connect_db():
 
     global cursor, conn
     try:
-        conn = sqlite3.connect('SophiaDB.db')
+        conn = sqlite3.connect(os.path.realpath('SophiaDB.db'))
         cursor = conn.cursor()
     except Exception as e:
         print("Erro ao abrir o banco de dados: ", e)
         exit(-1)
 
-def select_info_user(id_face):
+def select_info_user_db(id_face):
     """ Função para verificar se o id_face já está presente no DB """
 
     global cursor,conn
@@ -30,22 +31,42 @@ def select_info_user(id_face):
     """% (id_face))
     return cursor.fetchall()
 
-def insert_cred(id_face, matricula, senha):
+def insert_id_face_db(id_face, operacao):
     """ Função para inserir as credenciais no DB """
 
-    global cursor
+    global cursor, conn
     cursor.execute("""
-    INSERT INTO usuarios (id_face, matricula, senha)
-    VALUES (?,?,?)
-    """, (id_face, matricula, senha))
-
+    INSERT INTO usuarios (id_face, operacao)
+    VALUES (?,?)
+    """, (id_face, operacao))
+    conn.commit()
+    connect_db()
     cursor.execute("""
     INSERT INTO renovacoes (id)
     VALUES  ((SELECT id  FROM usuarios WHERE id_face LIKE '%d'), 0)
-    """% (int(id_face)))
+    """% (id_face))
     conn.commit()
 
-def update_vencimento(id,vencimento):
+def update_matricula(id_face, matricula):
+    global cursor
+    cursor.execute("""
+        UPDATE usuarios
+     SET matricula = '%s', operacao = 2
+     WHERE id_face = '%d';
+     """ % (matricula, id_face))
+    conn.commit()
+
+
+def update_operacao(id_face, operacao):
+    global cursor
+    cursor.execute("""
+       UPDATE usuarios
+    SET operacao = '%s'
+    WHERE id_face = '%d';
+    """% (operacao,id_face))
+    conn.commit()
+
+def update_vencimento_db(id,vencimento):
     """ Função para atualizar a data de renovação mais próxima """
 
     global cursor
@@ -57,7 +78,7 @@ def update_vencimento(id,vencimento):
     print(int(id),vencimento)
     conn.commit()
 
-def verificar_datas(id):
+def verificar_datas_db(id):
     """ Função para verificar a data de vencimento registrada no DB sem fazer o scraping """
 
     global cursor
@@ -66,18 +87,19 @@ def verificar_datas(id):
     WHERE id LIKE '%s'
     """% (int(id)))
 
-def update_senha(id_face, nova_senha):
+def update_senha_db(id_face, senha):
     " Função que realiza a troca de senha no DB"
 
     global cursor
     cursor.execute("""
        UPDATE usuario
-    SET senha = '%s'
+    SET senha = '%s',
+    operacao = '%d
     WHERE id_face = '%d';
-    """% (nova_senha,int(id_face)))
+    """% (senha,4,id_face))
     conn.commit()
 
-def select_livros():
+def select_livros_db():
 
     global cursor,conn
     cursor.execute("""

@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [ '*',]
 
-TOKEN_VERIFY = '<Token>'
+TOKEN_VERIFY = '<TOKEN>'
 TOKEN_2 = 'sophia'
 # Application definition
 
@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'sophia.urls'
+ROOT_URLCONF = 'chatbot.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sophia.wsgi.application'
+WSGI_APPLICATION = 'chatbot.wsgi.application'
 
 
 # Database

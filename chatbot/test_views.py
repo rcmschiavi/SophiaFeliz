@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 class TestSpotifyBotView(TestCase):
 
     def setUp(self):
-        self.url = reverse('chatbot:sophia')
+        self.url = reverse('chatbot:chatbot')
         self.client = Client()
 
     def test_get(self):

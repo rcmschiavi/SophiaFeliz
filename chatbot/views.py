@@ -1,12 +1,16 @@
 import json
 from pprint import pprint
-from django.views import generic
-from django.http.response import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
+
 from django.conf import settings
+from django.http.response import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views import generic
+from django.views.decorators.csrf import csrf_exempt
+from .Respostas import operacao
+from .Respostas import teste
 from .utils import post_facebook_message
-from .Respostas import chat2
+from operacoes.Manager_DB import  select_info_user_db
+from .mensagens import post_ola
 
 class SpotifyBotView(generic.View):
 
@@ -27,7 +31,8 @@ class SpotifyBotView(generic.View):
             for message in entry['messaging']:
                 if 'message' in message:
                     pprint(message)
-                    post_facebook_message(message['sender']['id'],
-                                          message['message']['text'])
-                    chat2(message['sender']['id'])
+                    operacao(message['sender']['id'],message['message']['text'])
+                    #teste()
+                    #post_ola(message['sender']['id'])
+                    #post_facebook_message(message['sender']['id'],message['message']['text'])
         return HttpResponse()
