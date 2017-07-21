@@ -26,9 +26,11 @@ Então instale as bibliotecas necessárias:
 - Gravar as credenciais no DB depois de verificar a matrícula; -> **OK**
 - Criar uma tabela para armazenar informações de renovação; -> **OK**
 - Criar o script de verificação automática das datas salvas no DB para avisar o usuário -> **OK**
+- Reestruturar o código para separar os procedimentos de chat do script automático; -> **Em processo...**
+- Iniciar a implementação do Chatbot; -> **OK**
+- Conectar o chatbot no restante do script -> **Em processo...*
 - Criptografar a senha na inserção e descriptografar na aquisição;
-- Reestruturar o código para separar os procedimentos de chat do script automático;
-- Iniciar a implementação do Chatbot.
+- Organizar lista de frases recebidas e de frases enviadas;
 
 ### Como contribuir:
 

@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.conf import settings
 from .utils import post_facebook_message
-
+from .Respostas import chat2
 
 class SpotifyBotView(generic.View):
 
@@ -29,4 +29,5 @@ class SpotifyBotView(generic.View):
                     pprint(message)
                     post_facebook_message(message['sender']['id'],
                                           message['message']['text'])
+                    chat2(message['sender']['id'])
         return HttpResponse()

@@ -1,13 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+import schedule
 import Scraping
 import Manager_DB
 import ChatBot
 import re
 import datetime
-from datetime import datetime, date, time, timedelta
-
+import time
+from datetime import datetime, date, timedelta
+from sophia.chatbot.utils import post_facebook_message
+from sophia import Comandos_shell
 
 def automatico():
     data_limite = date.today()  + timedelta(days=6)
@@ -33,13 +35,10 @@ def automatico():
 
     Manager_DB.select_livros()
 
-def chat():
+def chat(id_face):
     """ Função para realizar as operações quando receber requesições do chatBot """
 
     livros_renovar = []
-
-    # Captura o id do usuario do facebook
-    id_face = ChatBot.get_face()
 
     # Abre o DB para realizar as operações
     Manager_DB.connect_db()
@@ -114,5 +113,15 @@ def chat():
 
 # Chama a função para realizar as operações pelo chat
 #chat()
+print("     Inciando atividades...")
+# Realiza a atividade todos os dias no mesmo horário, verificar horário do server
+###schedule.every().day.at("03:00").do(automatico)
 
-automatico()
+# Para testes é mais interessante realizar operação a cada minuto
+schedule.every().minute.do(automatico)
+Comandos_shell.tunnel()
+print("     Portas abertas...")
+
+while True:
+    schedule.run_pending()
+    time.sleep(5) # wait one minute
