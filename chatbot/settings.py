@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [ '*',]
 
-TOKEN_VERIFY = '<TOKEN>'
+TOKEN_VERIFY = '<token>'
 TOKEN_2 = 'sophia'
 # Application definition
 

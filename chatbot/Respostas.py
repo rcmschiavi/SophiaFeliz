@@ -1,5 +1,6 @@
 from operacoes.ChatBot import *
 from .utils import post_facebook_message
+from chatterbot import ChatBot
 
 def operacao(id_face, mensagem):
     """ Função para realizar as operações de acordo com a necessidade, segue a lista das op e significados
@@ -36,3 +37,9 @@ def operacao(id_face, mensagem):
 
 def teste(verificar = False):
     return verificar
+
+def respauto(id_face, mensagem):
+    chatterbot = ChatBot("Sophia", trainer='chatterbot.trainers.ChatterBotCorpusTrainer')
+    chatterbot.train("chatterbot.corpus.portuguese")
+    resposta = chatterbot.get_response(mensagem)
+    post_facebook_message(id_face, str(resposta))
