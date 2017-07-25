@@ -1,7 +1,7 @@
 ﻿# SophiaFeliz
 Script (independente) para renovação automatizada de livros/circulações para bibliotecas que usam o sistema [SophiA](http://www.portalsophia.com.br).
 
-**EM DESENVOLVIMENTO. NÃO FUNCIONAL**
+**EM DESENVOLVIMENTO. AINDA NÃO FUNCIONAL**
 
 ---
 
@@ -16,11 +16,20 @@ Primeiramente clone o repositório e entre na pasta criada:
 Então instale as bibliotecas necessárias:
 `pip install -r requirements.txt`
 
-### Utilização
+### Configurações e Utilização
+Algumas configurações são necessárias dependendo do modo de teste desejado.
+Para testar online no Facebook, é necessário criar uma conta no [Facebook Developers](developers.facebook.com), um app e utilizar o produto **Messenger**, além de uma página.
+
+No arquivo `chatbot/settings.py`:
+-`<myfacebookdevelopersappsecret>` deve ser substituído pelo **App Secret** do app. 
+-`<myfacebookpagetoken>` deve ser substituído pelo token do Messenger linkado à
+página criada.
+
+O servidor deve ser iniciado:
 `./Main.py`             
 
-## Chatbot
-...
+No [Facebook Developers](developers.facebook.com) deve-se colar o link fornecido
+pelo servidor (main.py) e selecionar os eventos `messages, messaging_postbacks, messaging_optins, message_deliveries`.
 
 ---
 
