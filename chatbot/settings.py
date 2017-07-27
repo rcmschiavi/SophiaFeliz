@@ -20,14 +20,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 't9h834j343!%taw@jvwf2_a4qe6@p+8!b@um8%%w811mjia=w4'
+SECRET_KEY = '<myfacebookdeveloperssecretkey>'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [ '*',]
 
-TOKEN_VERIFY = '<token>'
+TOKEN_VERIFY = '<myfacebookpagetoken>'
 TOKEN_2 = 'sophia'
 # Application definition
 

@@ -1,19 +1,35 @@
 ﻿# SophiaFeliz
-Script de automação para renovação de livros na biblioteca Hercílio Luz.
+Script (independente) para renovação automatizada de livros/circulações para bibliotecas que usam o sistema [SophiA](http://www.portalsophia.com.br).
+
+**EM DESENVOLVIMENTO. AINDA NÃO FUNCIONAL**
 
 ---
+
+## Servidor (Python)
+
 ### Instalação:
 Para funcionar, requer Python 3 ou superior instalado.
 
 Primeiramente clone o repositório e entre na pasta criada:
-`git clone https://github.com/rcmschiavi/SophiaFeliz`
-`cd SophiaFeliz`
+`git clone https://github.com/rcmschiavi/SophiaFeliz && cd SophiaFeliz`
 
 Então instale as bibliotecas necessárias:
 `pip install -r requirements.txt`
 
-### Utilização
+### Configurações e Utilização
+Algumas configurações são necessárias dependendo do modo de teste desejado.
+Para testar online no Facebook, é necessário criar uma conta no [Facebook Developers](developers.facebook.com), um app e utilizar o produto **Messenger**, além de uma página.
+
+No arquivo `chatbot/settings.py`:
+-`<myfacebookdevelopersappsecret>` deve ser substituído pelo **App Secret** do app. 
+-`<myfacebookpagetoken>` deve ser substituído pelo token do Messenger linkado à
+página criada.
+
+O servidor deve ser iniciado:
 `./Main.py`             
+
+No [Facebook Developers](developers.facebook.com) deve-se colar o link fornecido
+pelo servidor (main.py) e selecionar os eventos `messages, messaging_postbacks, messaging_optins, message_deliveries`.
 
 ---
 
@@ -36,7 +52,7 @@ Então instale as bibliotecas necessárias:
 
 1. Crie um Fork.
 2. Para trabalhar em uma proposta, crie um branch (`git checkout -b proposta_x`)
-3. Commit (`git commit -ams "Descrição da proposta"`)
+3. Commit (`git commit -m "Descrição da proposta"`)
 4. Push para o branch da proposta (`git push origin proposta_x`)
 5. Abra uma [Pull Request]
 6. Vá fazer outra coisa.
