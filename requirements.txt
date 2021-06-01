@@ -6,7 +6,7 @@ lxml==3.8.0
 requests==2.18.1
 simplejson==3.11.1
 Unidecode==0.4.21
-urllib3==1.21.1
+urllib3==1.26.5
 django==1.11.3
 chatterbot==0.7.4
 schedule==0.4.3
